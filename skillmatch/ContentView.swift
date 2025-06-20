@@ -1,24 +1,20 @@
 //
 //  ContentView.swift
-//  skillmatch
+//  MatchingWithSwiftUI
 //
-//  Created by 中村優介 on 2025/06/20.
+//  Created by 中村優介 on 2025/05/25.
 //
 
 import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+        ListView()
     }
 }
 
 #Preview {
     ContentView()
 }
+
+
