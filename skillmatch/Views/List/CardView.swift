@@ -36,40 +36,12 @@ struct CardView: View {
         .gesture(gesture)
         .scaleEffect(scale)
         .rotationEffect(.degrees(angle))
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("NOPEAUTION"),object: nil)){
-            data in
-            print("ListViewModelからの通知を受信しました \(data)")
-            guard
-                  let info = data.userInfo,
-                  let id = info["id"] as? String
-                  else { return }
-            if id == user.id {
-                removeCard(isLiked: false)
-               }
-                    }
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("LIKEACTION"),object: nil)){
-            data in
-            print("ListViewModelからの通知を受信しました \(data)")
-            guard
-                  let info = data.userInfo,
-                  let id = info["id"] as? String
-                  else { return }
-            if id == user.id {
-                removeCard(isLiked: true)
-               }
-                    }
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("REDOACTION"),object: nil)){
-            data in
-            print("ListViewModelからの通知を受信しました \(data)")
-            guard
-                  let info = data.userInfo,
-                  let id = info["id"] as? String
-                  else { return }
-            if id == user.id {
-                resetCard()
-               }
-                    }
+
+        .onReceive(NotificationCenter.default.publisher(for:Notification.Name("AUTIONEROMBUTTON"),object: nil)) {data in
+            reseiveHandler(data: data)
+        }
     }
+    
 }
 
 #Preview {
@@ -187,12 +159,12 @@ extension CardView {
         DragGesture()
             .onChanged { value in
                 let width = value.translation.width
-
+                
                 let height = value.translation.height
-//三項演算子を利用
-//trueなら：の左側の処理Falseなら：の右側の処理
+                //三項演算子を利用
+                //trueなら：の左側の処理Falseなら：の右側の処理
                 let limitedHeight = height > 0 ? min(height, 100) : max(height, -100)
-
+                
                 offset = CGSize(width: width, height: limitedHeight )
             }
             .onEnded { value in
@@ -202,14 +174,35 @@ extension CardView {
                 
                 if (abs(width) > (screenWidth / 4)) {
                     removeCard(isLiked: width > 0, height: height)
-                 
+                    
                 } else {
                     resetCard()
                 }
             }
         
-                }
+    }
+    
+    private func reseiveHandler(data: NotificationCenter.Publisher.Output) {
+        guard
+            let info = data.userInfo,
+            let id = info["id"] as? String,
+            let action = info["action"] as? Action
+                else { return }
+        if id == user.id {
+            switch action {
+                
+            case .nope:
+                removeCard(isLiked: false)
+            case .redo:
+                resetCard()
+            case .like:
+                removeCard(isLiked: true)
             }
+            
+        }
+    }
+    
+}
     
 
 
