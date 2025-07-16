@@ -15,6 +15,7 @@ struct LoginView: View {
         
         NavigationStack {
             VStack {
+<<<<<<< HEAD
                 //image
                 BrandImage()
               
@@ -32,6 +33,54 @@ struct LoginView: View {
                     print("ログインボタンがタップされました")
                 }
                 .padding(.top,24)
+=======
+                
+                //image
+                Image(systemName: "person.circle.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundStyle(.red)
+                    .frame(width: 120, height: 120)
+                    .padding(.vertical, 32)
+                
+                //Form
+                VStack(spacing: 24) {
+                    VStack(alignment: .leading, spacing: 12){
+                        Text("メールアドレス")
+                            .foregroundStyle(Color(.darkGray))
+                            .fontWeight(.semibold)
+                            .font(.footnote)
+                        
+                        TextField("入力してください", text: $email)
+                        Divider()
+                    }
+                    VStack(alignment: .leading, spacing: 12){
+                        Text("パスワード")
+                            .foregroundStyle(Color(.darkGray))
+                            .fontWeight(.semibold)
+                            .font(.footnote)
+                        
+                        SecureField("半角英数字６文字以上", text: $password)
+                        Divider()
+                    }
+                }
+                .padding(.horizontal)
+                
+                //Buttton
+                Button {
+                    print("ログインボタンをタップしました")
+                } label: {
+                    Text("ログイン")
+                    Image(systemName: "arrow.right")
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 16)
+                .fontWeight(.bold)
+                .foregroundColor(.white)
+                .background(Color.red)
+                .clipShape(Capsule())
+                .padding(.horizontal)
+>>>>>>> 5bc598a5105d30e198b2966897f9147a4817cab3
                 
                 Spacer()
                 
